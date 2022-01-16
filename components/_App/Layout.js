@@ -1,7 +1,6 @@
 import React from "react"
 import Head from "next/head"
-import { ToastProvider } from "react-toast-notifications"
-import { Toaster } from "react-hot-toast"
+
 import Router from "next/router"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
@@ -53,13 +52,8 @@ const Layout = (props) => {
 
       {loader && <Preloader />}
 
-      <Toaster position="top-left" reverseOrder={false} />
 
-      <ToastProvider
-        placement="bottom-left"
-        autoDismissTimeout={10000}
-        autoDismiss
-      >
+      
         <div className="container-scroller">
           <Sidebar />
           <div className="container-fluid page-body-wrapper">
@@ -70,7 +64,6 @@ const Layout = (props) => {
         </div>
 
         <Footer />
-      </ToastProvider>
     </React.Fragment>
   )
 }

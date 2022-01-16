@@ -13,6 +13,7 @@ export default function Footer() {
             <a
               href="https://www.bootstrapdash.com/bootstrap-admin-template/"
               target="_blank"
+              rel="noreferrer"
             >
               Bootstrap admin templates
             </a>{" "}
