@@ -1,35 +1,35 @@
-import React from "react"
-import Head from "next/head"
+import React from "react";
+import Head from "next/head";
 
-import Router from "next/router"
-import Navbar from "./Navbar"
-import Footer from "./Footer"
-import Preloader from "./Preloader"
-import Sidebar from "./Sidebar"
+import Router from "next/router";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import Preloader from "./Preloader";
+import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
-  const { children, user } = props
-  const [loader, setLoader] = React.useState(true)
+  const { children, user } = props;
+  const [loader, setLoader] = React.useState(true);
   React.useEffect(() => {
     setTimeout(() => {
-      setLoader(false)
-    }, 1000)
-  }, [])
+      setLoader(false);
+    }, 1000);
+  }, []);
 
   Router.events.on("routeChangeStart", () => {
-    setLoader(true)
-  })
+    setLoader(true);
+  });
   Router.events.on("routeChangeComplete", () => {
-    setLoader(false)
-  })
+    setLoader(false);
+  });
   Router.events.on("routeChangeError", () => {
-    setLoader(false)
-  })
+    setLoader(false);
+  });
 
   return (
     <React.Fragment>
       <Head>
-        <title>Westend Educorp</title>
+        <title>VolksAndDavid</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -52,20 +52,18 @@ const Layout = (props) => {
 
       {loader && <Preloader />}
 
+      <div className="container-scroller">
+        <Sidebar />
+        <div className="container-fluid page-body-wrapper">
+          <Navbar user={user} />
 
-      
-        <div className="container-scroller">
-          <Sidebar />
-          <div className="container-fluid page-body-wrapper">
-            <Navbar user={user} />
-
-            {children}
-          </div>
+          {children}
         </div>
+      </div>
 
-        <Footer />
+      <Footer />
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

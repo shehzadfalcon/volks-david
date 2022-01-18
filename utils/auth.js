@@ -1,26 +1,38 @@
-import cookie from "js-cookie"
-import Router from "next/router"
+import cookie from "js-cookie";
+import Router from "next/router";
 
-export const handleLogin = (token, user, path) => {
-  cookie.set("token", token)
-  cookie.set("user", JSON.stringify(user))
-  cookie.set("path", path)
-  Router.push(path)
-}
+export const handleLogin = (token, user) => {
+  cookie.set("token", token);
+  cookie.set("user", JSON.stringify(user));
+  Router.push("/dashboard");
+};
 
 export const redirectUser = (ctx, location) => {
   if (ctx.req) {
-    ctx.res.writeHead(302, { Location: location })
-    ctx.res.end()
+    ctx.res.writeHead(302, { Location: location });
+    ctx.res.end();
   } else {
-    Router.push(location)
+    Router.push(location);
   }
-}
+};
+
+export const getUser = () => {
+  let USER = cookie.get("user");
+  if (USER) {
+    return JSON.parse(USER);
+  }
+};
+export const getToken = () => {
+  let token = cookie.get("token");
+  console.log("tokennwee", token);
+  if (token) {
+    return token;
+  }
+};
 
 export const handleLogout = () => {
-  cookie.remove("token")
-  cookie.remove("user")
-  cookie.remove("path")
+  cookie.remove("token");
+  cookie.remove("user");
 
-  Router.push("/")
-}
+  Router.push("/");
+};

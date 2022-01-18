@@ -4,50 +4,54 @@ import Notifier from "../utils/Notifier";
 import baseUrl from "../utils/baseUrl";
 import Link from "next/link";
 import Router from "next/router";
-
-import { handleLogin } from "../utils/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 export default function Login() {
   const [loading, setloading] = React.useState(false);
   const formik = useFormik({
     initialValues: {
+      firstname: "",
+      lastname: "",
+      phone: "",
       email: "",
       password: "",
     },
-    validationSchema: LOGIN_YUP,
+    validationSchema: REGISTER_YUP,
     onSubmit: async (values) => {
       setloading(true);
 
       try {
-        let response = await Axios.post(`${baseUrl}/login`, values);
+        let response = await Axios.post(`${baseUrl}/signup`, values);
+        setloading(false);
+        Router.push("/login");
 
-        const { token, user } = response.data.result;
-        handleLogin(token, user);
         Notifier(response.data.message, "success");
-
-        setTimeout(() => {
-          setloading(false);
-        }, 2000);
       } catch (err) {
-        console.log(err, "err");
         setloading(false);
 
         Notifier(err.response.data.message, "error");
       }
     },
   });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name == "phone") {
+      if (value.length <= 11) {
+        formik.setFieldValue(name, value.replace(/\D/g, ""));
+      }
+    }
+  };
   return (
     <div className="bg-slate-200 h-screen w-screen">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
         <div
           className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-slate-100 sm:mx-0"
-          style={{ height: "400px" }}
+          style={{ minHeight: "35rem" }}
         >
           <div className="flex flex-col w-full  p-4">
             <div className="flex flex-col flex-1 justify-center mb-8">
               <h1 className="text-4xl font--semibold text-center  text-black mb-2">
-                Login
+                Register
               </h1>
               <div className="w-full mt-4">
                 <form className="form-horizontal w-3/4 mx-auto">
@@ -56,7 +60,58 @@ export default function Login() {
                       id="email"
                       type="text"
                       className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      name="firstname"
+                      placeholder="First Name"
+                      onChange={formik.handleChange}
+                      value={formik.values.firstname}
+                    />
+                    <div className="text-danger pt-1">
+                      {formik.touched.firstname && formik.errors.firstname ? (
+                        <div>{formik.errors.firstname}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="flex flex-col ">
+                    <input
+                      id="lastname"
+                      type="text"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      name="lastname"
+                      required
+                      placeholder="Last Name"
+                      onChange={formik.handleChange}
+                      value={formik.values.lastname}
+                    />
+                    <div className="text-danger pt-1">
+                      {formik.touched.lastname && formik.errors.lastname ? (
+                        <div>{formik.errors.lastname}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="flex flex-col ">
+                    <input
+                      id="phone"
+                      type="text"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      name="phone"
+                      required
+                      placeholder="Phone Number"
+                      onChange={handleChange}
+                      value={formik.values.phone}
+                    />
+                    <div className="text-danger pt-1">
+                      {formik.touched.phone && formik.errors.phone ? (
+                        <div>{formik.errors.phone}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="flex flex-col ">
+                    <input
+                      id="email"
+                      type="email"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       name="email"
+                      required
                       placeholder="Email"
                       onChange={formik.handleChange}
                       value={formik.values.email}
@@ -71,7 +126,7 @@ export default function Login() {
                     <input
                       id="password"
                       type="password"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-1 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                       name="password"
                       required
                       placeholder="Password"
@@ -86,14 +141,12 @@ export default function Login() {
                   </div>
                   <div className="flex flex-col items-end">
                     <div className="text-sm">
-                      <Link href="forgot-password">
-                        <a
-                          href="#"
-                          className="font-medium text-indigo-500 hover:text-indigo-500"
-                        >
-                          Forgot your password?
-                        </a>
-                      </Link>
+                      <a
+                        href="#"
+                        className="font-medium text-indigo-500 hover:text-indigo-500"
+                      >
+                        Forgot your password?
+                      </a>
                     </div>
                   </div>
                   <div className="flex flex-col mt-4">
@@ -102,16 +155,16 @@ export default function Login() {
                       onClick={formik.handleSubmit}
                       className="bg-gray-900 hover:bg-gray-900 text-white text-sm font-semibold py-2 px-4 rounded-2xl"
                     >
-                      {loading ? "Loading.." : "Login"}
+                      {loading ? "Submitting" : "Register"}
                     </button>
                   </div>
                   <div className="flex flex-col items-center mt-2">
                     <h5 className="text-black">OR</h5>
                   </div>
                   <div className="flex flex-col text-center mt-2">
-                    <Link href="/register">
+                    <Link href="/login">
                       <a className="bg-gray-900 hover:bg-gray-900 hover:no-underline text-white text-sm font-semibold py-2 px-4 rounded-2xl">
-                        Register
+                        Login
                       </a>
                     </Link>
                   </div>
@@ -124,7 +177,12 @@ export default function Login() {
     </div>
   );
 }
-const LOGIN_YUP = Yup.object({
+const REGISTER_YUP = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string().max(255).required("Required"),
+  firstname: Yup.string().max(255).required("Required"),
+  lastname: Yup.string().max(255).required("Required"),
+  phone: Yup.number()
+    .min(11, "Phone number length should be 11")
+    .required("Required"),
 });

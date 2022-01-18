@@ -1,7 +1,9 @@
-import React from "react"
-import Link from "../../utils/ActiveLink"
+import React from "react";
+import Link from "../../utils/ActiveLink";
+import { handleLogout, getUser } from "../../utils/auth";
+const Navbar = () => {
+  let USER = getUser();
 
-const Navbar = ({ user }) => {
   return (
     <nav className="navbar p-0 fixed-top d-flex flex-row">
       <div className="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -232,7 +234,7 @@ const Navbar = ({ user }) => {
                   alt=""
                 />
                 <p className="mb-0 d-none d-sm-block navbar-profile-name">
-                  Henry Klein
+                  {USER && `${USER.firstname} ${USER.lastname}`}
                 </p>
                 <i className="mdi mdi-menu-down d-none d-sm-block" />
               </div>
@@ -243,16 +245,19 @@ const Navbar = ({ user }) => {
             >
               <h6 className="p-3 mb-0">Profile</h6>
               <div className="dropdown-divider" />
-              <a className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-settings text-success" />
+              <Link href="/profile-settings">
+                <a className="dropdown-item preview-item">
+                  <div className="preview-thumbnail">
+                    <div className="preview-icon bg-dark rounded-circle">
+                      <i className="mdi mdi-settings text-success" />
+                    </div>
                   </div>
-                </div>
-                <div className="preview-item-content">
-                  <p className="preview-subject mb-1">Settings</p>
-                </div>
-              </a>
+                  <div className="preview-item-content">
+                    <p className="preview-subject mb-1">Settings</p>
+                  </div>
+                </a>
+              </Link>
+
               <div className="dropdown-divider" />
               <a className="dropdown-item preview-item">
                 <div className="preview-thumbnail">
@@ -260,12 +265,15 @@ const Navbar = ({ user }) => {
                     <i className="mdi mdi-logout text-danger" />
                   </div>
                 </div>
-                <div className="preview-item-content">
+                <div
+                  className="preview-item-content"
+                  onClick={() => handleLogout()}
+                >
                   <p className="preview-subject mb-1">Log out</p>
                 </div>
               </a>
               <div className="dropdown-divider" />
-              <p className="p-3 mb-0 text-center">Advanced settings</p>
+              {/* <p className="p-3 mb-0 text-center">Advanced settings</p> */}
             </div>
           </li>
         </ul>
@@ -278,7 +286,7 @@ const Navbar = ({ user }) => {
         </button>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -1,23 +1,21 @@
-import Link from "next/link"
-import React from "react"
+import Link from "next/link";
+import React from "react";
 
 export default function Sidebar() {
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <div className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <Link href="/">
-          <a className="sidebar-brand brand-logo">
-            <img src="assets/images/logo.svg" alt="logo" />
-          </a>
+        <Link href="/dashboard">
+          <a className="sidebar-brand brand-logo text-white">VolksAndDavid</a>
         </Link>
-        <Link href="/">
+        <Link href="/dashboard">
           <a className="sidebar-brand brand-logo-mini" href="index.html">
             <img src="assets/images/logo-mini.svg" alt="logo" />
           </a>
         </Link>
       </div>
       <ul className="nav">
-        <li className="nav-item profile">
+        {/* <li className="nav-item profile">
           <div className="profile-desc">
             <div className="profile-pic">
               <div className="count-indicator">
@@ -80,12 +78,12 @@ export default function Sidebar() {
               </a>
             </div>
           </div>
-        </li>
+        </li> */}
         <li className="nav-item nav-category">
           <span className="nav-link">Navigation</span>
         </li>
         <li className="nav-item menu-items">
-          <Link href="/">
+          <Link href="/dashboard">
             <a className="nav-link" href="index.html">
               <span className="menu-icon">
                 <i className="mdi mdi-speedometer" />
@@ -112,7 +110,7 @@ export default function Sidebar() {
             <ul className="nav flex-column sub-menu">
               <li className="nav-item">
                 {" "}
-                <Link href="/">
+                <Link href="/dashboard">
                   <a
                     className="nav-link"
                     href="../../pages/samples/blank-page.html"
@@ -124,7 +122,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 {" "}
-                <Link href="/">
+                <Link href="/dashboard">
                   <a
                     className="nav-link"
                     href="../../pages/samples/error-404.html"
@@ -136,7 +134,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 {" "}
-                <Link href="/">
+                <Link href="/dashboard">
                   <a
                     className="nav-link"
                     href="../../pages/samples/error-500.html"
@@ -164,5 +162,5 @@ export default function Sidebar() {
         </li>
       </ul>
     </nav>
-  )
+  );
 }
