@@ -3,6 +3,8 @@ import { getUser } from "../utils/auth";
 import baseUrl from "../utils/baseUrl";
 import Notifier from "../utils/Notifier";
 import Layout from "../components/_App/Layout";
+import Router from "next/router"
+import cookie from "js-cookie"
 
 // import { DEFAULT_IMAGE } from "../utils/Globals/index";
 import Axios from "axios";
@@ -36,10 +38,14 @@ const EditProfile = () => {
       setloading(true);
 
       try {
-        let response = await Axios.post(`${baseUrl}/signup`, values);
-        setloading(false);
-        Router.push("/login");
+        let response = await Axios.put(
+          `${baseUrl}/edit-user/${USER._id}`,
+          values
+        )
+        cookie.set("user", JSON.stringify(response.data.user))
 
+        Router.reload()
+        setloading(false)
         Notifier(response.data.message, "success");
       } catch (err) {
         setloading(false);
