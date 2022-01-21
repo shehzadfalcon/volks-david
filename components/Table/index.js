@@ -333,6 +333,7 @@ export default function EnhancedTable(props) {
                           <StyledTableCell
                             component="th"
                             id={labelId}
+                            key={id}
                             scope="row"
                             align="center"
                             padding="none"
@@ -341,7 +342,7 @@ export default function EnhancedTable(props) {
                           </StyledTableCell>
                         ))}
                     </TableRow>
-                  );
+                  )
                 })}
             </TableBody>
           </Table>
