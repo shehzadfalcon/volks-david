@@ -110,7 +110,7 @@ export default function Sidebar() {
             <ul className="nav flex-column sub-menu">
               <li className="nav-item">
                 {" "}
-                <Link href="/dashboard">
+                <Link href="/customers">
                   <a
                     className="nav-link"
                     href="../../pages/samples/blank-page.html"
@@ -122,7 +122,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 {" "}
-                <Link href="/dashboard">
+                <Link href="/invoice-list">
                   <a
                     className="nav-link"
                     href="../../pages/samples/error-404.html"
