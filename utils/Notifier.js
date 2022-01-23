@@ -4,7 +4,7 @@ const Notifier = (message, status) =>
   toast[status](message, {
     duration: 3000,
     position: "top-center",
-    // Styling
+   
     style: { width: "50rem", border: "0.2px solid #c3c4c4" },
     className: "",
     // Custom Icon
