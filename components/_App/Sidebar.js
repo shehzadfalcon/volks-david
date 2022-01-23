@@ -122,7 +122,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 {" "}
-                <Link href="/invoice-list">
+                <Link href="/generate-invoice">
                   <a
                     className="nav-link"
                     href="../../pages/samples/error-404.html"
@@ -134,7 +134,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 {" "}
-                <Link href="/dashboard">
+                <Link href="/invoice-list">
                   <a
                     className="nav-link"
                     href="../../pages/samples/error-500.html"

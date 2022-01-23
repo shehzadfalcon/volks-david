@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import { useRouter } from "next/router";
 
 export default function Create(props) {
-  const [loading, setloading] = React.useState(false);
   const Router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -17,15 +16,15 @@ export default function Create(props) {
       lastname: "",
       email: "",
       phone: "",
-      password: "",
-      confirm_password: "",
+      // password: "",
+      // confirm_password: "",
     },
     validationSchema: Detail_YUP,
     onSubmit: async (values) => {
       try {
         let response = await Axios({
-          method: "post",
-          url: `${baseUrl}/signup`,
+          method: "put",
+          url: `${baseUrl}/edit-user/${props.editId}`,
           data: values,
         });
         Router.reload();
@@ -50,6 +49,13 @@ export default function Create(props) {
       formik.setFieldValue(name, value);
     }
   };
+  useEffect(() => {
+    if (props.editData) {
+      Object.keys(props.editData).map((dt) =>
+        formik.setFieldValue(dt, props.editData[dt])
+      );
+    }
+  }, []);
 
   return (
     <div>
@@ -124,7 +130,7 @@ export default function Create(props) {
             </div>
           </div>
         </div>
-        <div className="lg:flex no-wrap -mx-3 mb-0">
+        {/* <div className="lg:flex no-wrap -mx-3 mb-0">
           <div className="w-full lg:w-1/2 md:w-full sm:w-full px-3">
             <TextInput
               className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -158,11 +164,11 @@ export default function Create(props) {
               ) : null}
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="row pb-2 mt-3 ">
           <div className="col-lg-12 text-right">
-            <Button onClick={formik.handleSubmit} label="Create" />
+            <Button onClick={formik.handleSubmit} label="Update" />
           </div>
         </div>
       </form>
@@ -177,17 +183,17 @@ const Detail_YUP = Yup.object({
   phone: Yup.number()
     .min(11, "Phone number length should be 11")
     .required("Required"),
-  password: Yup.string()
-    .min(6, "Must be 6 characters long")
-    .required("Required"),
-  confirm_password: Yup.string()
-    .when("password", {
-      is: (val) => (val && val.length > 0 ? true : false),
-      then: Yup.string().oneOf(
-        [Yup.ref("password")],
-        "Both password need to be the same"
-      ),
-    })
-    .min(6, "Must be 6 characters long")
-    .required("Required"),
+  // password: Yup.string()
+  //   .min(6, "Must be 6 characters long")
+  //   .required("Required"),
+  // confirm_password: Yup.string()
+  //   .when("password", {
+  //     is: (val) => (val && val.length > 0 ? true : false),
+  //     then: Yup.string().oneOf(
+  //       [Yup.ref("password")],
+  //       "Both password need to be the same"
+  //     ),
+  //   })
+  //   .min(6, "Must be 6 characters long")
+  //   .required("Required"),
 });

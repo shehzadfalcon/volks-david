@@ -19,6 +19,8 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
@@ -240,7 +242,7 @@ export default function EnhancedTable(props) {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(props.data.length);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -329,7 +331,9 @@ export default function EnhancedTable(props) {
                       selected={isItemSelected}
                     >
                       {props.rows &&
-                        props.rows.map(({ id }) => (
+                        props.rows.slice(0,4).map(({ id }) => (
+
+
                           <StyledTableCell
                             component="th"
                             id={labelId}
@@ -340,7 +344,17 @@ export default function EnhancedTable(props) {
                           >
                             {row[id]}
                           </StyledTableCell>
+
                         ))}
+                      <StyledTableCell>
+                      <IconButton color="primary">
+                          <EditIcon  onClick={()=>props.onEdit(row._id)}/>
+                        </IconButton>
+                        <IconButton color="error">
+                          <DeleteIcon onClick={()=>props.onDelete(row._id)}/>
+                        </IconButton>
+                        
+                      </StyledTableCell>
                     </TableRow>
                   )
                 })}

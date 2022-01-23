@@ -3,8 +3,8 @@ import { getUser } from "../utils/auth";
 import baseUrl from "../utils/baseUrl";
 import Notifier from "../utils/Notifier";
 import Layout from "../components/_App/Layout";
-import Router from "next/router"
-import cookie from "js-cookie"
+import Router from "next/router";
+import cookie from "js-cookie";
 
 // import { DEFAULT_IMAGE } from "../utils/Globals/index";
 import Axios from "axios";
@@ -41,11 +41,11 @@ const EditProfile = () => {
         let response = await Axios.put(
           `${baseUrl}/edit-user/${USER._id}`,
           values
-        )
-        cookie.set("user", JSON.stringify(response.data.user))
+        );
+        cookie.set("user", JSON.stringify(response.data.user));
 
-        Router.reload()
-        setloading(false)
+        Router.reload();
+        setloading(false);
         Notifier(response.data.message, "success");
       } catch (err) {
         setloading(false);
@@ -73,7 +73,7 @@ const EditProfile = () => {
                   Update Profile
                 </h1>
                 <div className="w-full mt-4">
-                  <form className="form-horizontal w-3/4 mx-auto">
+                  <form className="form-horizontal lg:w-3/4 md:w-full sm:w-full  mx-auto">
                     <div className="flex flex-col ">
                       <input
                         id="email"

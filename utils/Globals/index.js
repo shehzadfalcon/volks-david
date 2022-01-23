@@ -19,6 +19,12 @@ export const usersheadCells = [
     disablePadding: false,
     label: "Email",
   },
+  {
+    id: "actions",
+    numeric: true,
+    disablePadding: false,
+    label: "Actions",
+  },
 ];
 export const customersheadCells = [
   {
@@ -36,10 +42,16 @@ export const customersheadCells = [
   },
   { id: "phone", numeric: true, disablePadding: false, label: "Phone" },
   {
-    id: "Address",
+    id: "address",
     numeric: false,
     disablePadding: true,
     label: "Address",
+  },
+  {
+    id: "actions",
+    numeric: true,
+    disablePadding: false,
+    label: "Actions",
   },
 ];
 export const invoicesheadCells = [
@@ -62,5 +74,11 @@ export const invoicesheadCells = [
     numeric: false,
     disablePadding: true,
     label: "Address",
+  },
+  {
+    id: "actions",
+    numeric: true,
+    disablePadding: false,
+    label: "Actions",
   },
 ];

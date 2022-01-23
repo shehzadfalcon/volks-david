@@ -6,7 +6,7 @@ import Link from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import TextInput from '../components/TextInput'
+import TextInput from "../components/TextInput";
 export default function Login() {
   const [loading, setloading] = React.useState(false);
   const formik = useFormik({
@@ -16,7 +16,7 @@ export default function Login() {
       phone: "",
       email: "",
       password: "",
-      confirm_password:""
+      confirm_password: "",
     },
     validationSchema: REGISTER_YUP,
     onSubmit: async (values) => {
@@ -56,103 +56,102 @@ export default function Login() {
                 Register
               </h1>
               <div className="w-full mt-4">
-                <form className="form-horizontal w-3/4 mx-auto">
-                  <div className="flex flex-col ">
+                <form className="form-horizontal lg:w-3/4 md:w-full sm:w-full mx-auto">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="email"
                       type="text"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="firstname"
                       placeholder="First Name"
                       onChange={formik.handleChange}
                       value={formik.values.firstname}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.firstname && formik.errors.firstname ? (
                         <div>{formik.errors.firstname}</div>
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="lastname"
                       type="text"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="lastname"
                       required
                       placeholder="Last Name"
                       onChange={formik.handleChange}
                       value={formik.values.lastname}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.lastname && formik.errors.lastname ? (
                         <div>{formik.errors.lastname}</div>
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="phone"
                       type="text"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="phone"
                       required
                       placeholder="Phone Number"
                       onChange={handleChange}
                       value={formik.values.phone}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.phone && formik.errors.phone ? (
                         <div>{formik.errors.phone}</div>
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="email"
                       type="email"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="email"
                       required
                       placeholder="Email"
                       onChange={formik.handleChange}
                       value={formik.values.email}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.email && formik.errors.email ? (
                         <div>{formik.errors.email}</div>
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="password"
                       type="password"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="password"
                       required
                       placeholder="Password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.password && formik.errors.password ? (
                         <div>{formik.errors.password}</div>
                       ) : null}
                     </div>
                   </div>
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col mb-2">
                     <input
                       id="confirm_password"
                       type="text"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="confirm_password"
                       placeholder="Confirm Password"
                       onChange={formik.handleChange}
                       value={formik.values.confirm_password}
                     />
-                    <div className="text-danger pt-1">
+                    <div className="text-danger ">
                       {formik.touched.confirm_password &&
                       formik.errors.confirm_password ? (
                         <div>{formik.errors.confirm_password}</div>
@@ -200,18 +199,18 @@ export default function Login() {
 const REGISTER_YUP = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
-  .min(6, "Must be 6 characters long")
-  .required("Required"),
-confirm_password: Yup.string()
-  .when("password", {
-    is: (val) => (val && val.length > 0 ? true : false),
-    then: Yup.string().oneOf(
-      [Yup.ref("password")],
-      "Both password need to be the same"
-    ),
-  })
-  .min(6, "Must be 6 characters long")
-  .required("Required"),
+    .min(6, "Must be 6 characters long")
+    .required("Required"),
+  confirm_password: Yup.string()
+    .when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    })
+    .min(6, "Must be 6 characters long")
+    .required("Required"),
   firstname: Yup.string().max(255).required("Required"),
   lastname: Yup.string().max(255).required("Required"),
   phone: Yup.number()
