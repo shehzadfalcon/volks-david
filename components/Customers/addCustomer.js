@@ -6,10 +6,8 @@ import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/router";
 
 export default function Create(props) {
-  const Router = useRouter();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -25,7 +23,8 @@ export default function Create(props) {
           url: `${baseUrl}/create-customer`,
           data: values,
         });
-        Router.reload();
+
+        props.setcustomersData(response.data.customers);
 
         props.toggle();
 
@@ -42,7 +41,9 @@ export default function Create(props) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
-      formik.setFieldValue(name, value.replace(/\D/g, ""));
+      if (value.length <= 11) {
+        formik.setFieldValue(name, value.replace(/\D/g, ""));
+      }
     } else {
       formik.setFieldValue(name, value);
     }
@@ -136,7 +137,7 @@ const Detail_YUP = Yup.object({
   name: Yup.string().required("Required"),
   address: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
-  phone: Yup.number()
+  phone: Yup.string()
     .min(11, "Phone number length should be 11")
     .required("Required"),
 });

@@ -4,7 +4,6 @@ import Head from "next/head";
 import Router from "next/router";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import Preloader from "./Preloader";
 import Sidebar from "./Sidebar";
 
 const Layout = (props) => {
@@ -50,7 +49,7 @@ const Layout = (props) => {
         <link rel="canonical" href="https://westend.co.in"></link>
       </Head>
 
-      {loader && <Preloader />}
+      {/* {loader && <Preloader />} */}
 
       <div className="container-scroller">
         <Sidebar />

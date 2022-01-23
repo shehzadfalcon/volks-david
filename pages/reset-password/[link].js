@@ -1,15 +1,15 @@
-import React from "react"
-import Axios from "axios"
-import Notifier from "../../utils/Notifier"
-import baseUrl from "../../utils/baseUrl"
-import { useRouter } from "next/router"
+import React from "react";
+import Axios from "axios";
+import Notifier from "../../utils/Notifier";
+import baseUrl from "../../utils/baseUrl";
+import { useRouter } from "next/router";
 
-import { handleLogin } from "../../utils/auth"
-import { useFormik } from "formik"
-import * as Yup from "yup"
+import { handleLogin } from "../../utils/auth";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 export default function Login() {
-  const [loading, setloading] = React.useState(false)
-  const Router = useRouter()
+  const [loading, setloading] = React.useState(false);
+  const Router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -18,29 +18,29 @@ export default function Login() {
     },
     validationSchema: LOGIN_YUP,
     onSubmit: async (values) => {
-      setloading(true)
+      setloading(true);
 
       try {
         let response = await Axios.post(`${baseUrl}/forgot-password/reset`, {
           resetPasswordToken: Router.query.link,
           password: values.password,
-        })
-        Router.push("/login")
-        setloading(false)
+        });
+        Router.push("/login");
+        setloading(false);
 
-        Notifier(response.data.message, "success")
+        Notifier(response.data.message, "success");
       } catch (err) {
-        console.log(err, "err")
-        setloading(false)
+        console.log(err, "err");
+        setloading(false);
 
-        Notifier(err.response.data.message, "error")
+        Notifier(err.response.data.message, "error");
       }
     },
-  })
+  });
   return (
-    <div className="bg-slate-500 h-screen w-screen">
+    <div className="bg-slate-200 h-screen w-screen">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-        <div className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-slate-200 sm:mx-0">
+        <div className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-slate-100 sm:mx-0">
           <div className="flex flex-col w-full  p-4">
             <div className="flex flex-col flex-1 justify-center mb-8">
               <h1 className="text-4xl font--semibold text-center  text-black mb-2">
@@ -98,7 +98,7 @@ export default function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 const LOGIN_YUP = Yup.object({
   password: Yup.string()
@@ -114,4 +114,4 @@ const LOGIN_YUP = Yup.object({
     })
     .min(6, "Must be 6 characters long")
     .required("Required"),
-})
+});

@@ -19,12 +19,11 @@ export default function Login() {
       setloading(true);
 
       try {
-        let response = await Axios.post(`${baseUrl}/forgot-password`, values)
-        Router.push("/login")
-        setloading(false)
+        let response = await Axios.post(`${baseUrl}/forgot-password`, values);
+        Router.push("/login");
+        setloading(false);
 
-        Notifier(response.data.message, "success")
-      
+        Notifier(response.data.message, "success");
       } catch (err) {
         console.log(err, "err");
         setloading(false);
@@ -34,9 +33,9 @@ export default function Login() {
     },
   });
   return (
-    <div className="bg-slate-500 h-screen w-screen">
+    <div className="bg-slate-200 h-screen w-screen">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-        <div className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-slate-200 sm:mx-0">
+        <div className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-slate-100 sm:mx-0">
           <div className="flex flex-col w-full  p-4">
             <div className="flex flex-col flex-1 justify-center mb-8">
               <h1 className="text-4xl font--semibold text-center  text-black mb-2">
@@ -77,7 +76,7 @@ export default function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 const LOGIN_YUP = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),

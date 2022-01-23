@@ -15,16 +15,17 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (USER) {
-      let { firstname, lastname, email, phone, password } = USER;
-
+      let { firstname, lastname, email, phone } = USER;
       formik.setFieldValue("firstname", firstname);
       formik.setFieldValue("lastname", lastname);
       formik.setFieldValue("email", email);
       formik.setFieldValue("phone", phone);
-      formik.setFieldValue("password", password);
+      // formik.setFieldValue("password", password);
     }
   }, []);
   const [loading, setloading] = React.useState(false);
+  const [password, setPassword] = React.useState("");
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -32,19 +33,20 @@ const EditProfile = () => {
       phone: "",
       email: "",
       password: "",
+      confirm_password: "",
     },
-    validationSchema: REGISTER_YUP,
+    validationSchema: password ? PASSWORD_REGISTER_YUP : REGISTER_YUP,
+
     onSubmit: async (values) => {
       setloading(true);
 
       try {
         let response = await Axios.put(
-          `${baseUrl}/edit-user/${USER._id}`,
+          `${baseUrl}/edit-profile/${USER._id}`,
           values
         );
         cookie.set("user", JSON.stringify(response.data.user));
 
-        Router.reload();
         setloading(false);
         Notifier(response.data.message, "success");
       } catch (err) {
@@ -54,14 +56,19 @@ const EditProfile = () => {
       }
     },
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name == "phone") {
       if (value.length <= 11) {
         formik.setFieldValue(name, value.replace(/\D/g, ""));
       }
+    } else if (name === "password") {
+      setPassword(value);
+      formik.setFieldValue(name, value);
     }
   };
+
   return (
     <Layout>
       <div className="bg-slate-200 h-screen w-screen">
@@ -141,24 +148,39 @@ const EditProfile = () => {
                         ) : null}
                       </div>
                     </div>
-                    {/* <div className="flex flex-col ">
-                    <input
-                      id="password"
-                      type="password"
-                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                      name="password"
-                      required
-                      placeholder="Password"
-                      onChange={formik.handleChange}
-                      value={formik.values.password}
-                    />
-                    <div className="text-danger pt-1">
-                      {formik.touched.password && formik.errors.password ? (
-                        <div>{formik.errors.password}</div>
-                      ) : null}
+                    <div className="flex flex-col ">
+                      <input
+                        id="password"
+                        type="text"
+                        className="appearance-none block w-full  text-gray-700 rounded-3xl border-2 border-grey-400 py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white"
+                        name="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                        value={formik.values.password}
+                      />
+                      <div className="text-danger pt-1">
+                        {formik.touched.password && formik.errors.password ? (
+                          <div>{formik.errors.password}</div>
+                        ) : null}
+                      </div>
                     </div>
-                  </div> */}
-
+                    <div className="flex flex-col ">
+                      <input
+                        id="confirm_password"
+                        type="text"
+                        className="appearance-none block w-full  text-gray-700 rounded-3xl border-2 border-grey-400 py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white"
+                        name="confirm_password"
+                        placeholder="Confirm Password"
+                        onChange={formik.handleChange}
+                        value={formik.values.confirm_password}
+                      />
+                      <div className="text-danger pt-1">
+                        {formik.touched.confirm_password &&
+                        formik.errors.confirm_password ? (
+                          <div>{formik.errors.confirm_password}</div>
+                        ) : null}
+                      </div>
+                    </div>
                     <div className="flex flex-col mt-4">
                       <button
                         type="button"
@@ -182,11 +204,33 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
-const REGISTER_YUP = Yup.object({
+
+const PASSWORD_REGISTER_YUP = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
   firstname: Yup.string().max(255).required("Required"),
   lastname: Yup.string().max(255).required("Required"),
   phone: Yup.number()
+    .min(11, "Phone number length should be 11")
+    .required("Required"),
+  password: Yup.string()
+    .min(6, "Must be 6 characters long")
+    .required("This field is required"),
+  confirm_password: Yup.string()
+    .when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    })
+    .min(6, "Must be 6 characters long")
+    .required("Required"),
+});
+const REGISTER_YUP = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Required"),
+  firstname: Yup.string().max(255).required("Required"),
+  lastname: Yup.string().max(255).required("Required"),
+  phone: Yup.string()
     .min(11, "Phone number length should be 11")
     .required("Required"),
 });

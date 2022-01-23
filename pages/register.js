@@ -213,7 +213,7 @@ const REGISTER_YUP = Yup.object({
     .required("Required"),
   firstname: Yup.string().max(255).required("Required"),
   lastname: Yup.string().max(255).required("Required"),
-  phone: Yup.number()
+  phone: Yup.string()
     .min(11, "Phone number length should be 11")
     .required("Required"),
 });

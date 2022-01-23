@@ -26,7 +26,7 @@ export default function Users({ users }) {
     if (users && users.length > 0) {
       setcustomersData(users);
     }
-  }, [modal]);
+  }, []);
   const handleDelete = async (id) => {
     if (id) {
       try {
@@ -34,7 +34,7 @@ export default function Users({ users }) {
           method: "delete",
           url: `${baseUrl}/delete-customer/${id}`,
         });
-        Router.reload();
+        setcustomersData(response.data.customers);
 
         Notifier(response.data.message, "success");
 
@@ -61,11 +61,13 @@ export default function Users({ users }) {
         title="Add Customer"
         modal={modal}
         toggle={toggle}
-        content={<AddCustomer toggle={toggle} />}
+        content={
+          <AddCustomer toggle={toggle} setcustomersData={setcustomersData} />
+        }
       />
       <Modal
         size="lg"
-        title="Add User"
+        title="Update Customer"
         modal={editmodal}
         toggle={editToggle}
         content={
@@ -73,6 +75,7 @@ export default function Users({ users }) {
             toggle={editToggle}
             editId={editId}
             editData={editData}
+            setcustomersData={setcustomersData}
           />
         }
       />
@@ -97,7 +100,6 @@ export default function Users({ users }) {
                         rows={customersheadCells}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
-
                       />
                     ) : (
                       "no data found"

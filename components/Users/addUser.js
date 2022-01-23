@@ -6,11 +6,8 @@ import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/router";
 
 export default function Create(props) {
-  const [loading, setloading] = React.useState(false);
-  const Router = useRouter();
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -28,7 +25,7 @@ export default function Create(props) {
           url: `${baseUrl}/signup`,
           data: values,
         });
-        Router.reload();
+        props.setusersData(response.data.users);
 
         props.toggle();
 
@@ -45,7 +42,9 @@ export default function Create(props) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
-      formik.setFieldValue(name, value.replace(/\D/g, ""));
+      if (value.length <= 11) {
+        formik.setFieldValue(name, value.replace(/\D/g, ""));
+      }
     } else {
       formik.setFieldValue(name, value);
     }
@@ -144,7 +143,7 @@ export default function Create(props) {
           <div className="w-full lg:w-1/2 md:w-full sm:w-full px-3 mb-6 md:mb-0">
             <TextInput
               className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              type="confirm_password"
+              type="password"
               placeholder="Confirm Password"
               label="Confirm Password"
               name="confirm_password"
@@ -174,7 +173,7 @@ const Detail_YUP = Yup.object({
   firstname: Yup.string().required("Required"),
   lastname: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
-  phone: Yup.number()
+  phone: Yup.string()
     .min(11, "Phone number length should be 11")
     .required("Required"),
   password: Yup.string()

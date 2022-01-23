@@ -28,7 +28,7 @@ export default function Users({ users }) {
     if (users && users.length > 0) {
       setusersData(users);
     }
-  }, [modal]);
+  }, []);
   const handleDelete = async (id) => {
     if (id) {
       try {
@@ -36,7 +36,7 @@ export default function Users({ users }) {
           method: "delete",
           url: `${baseUrl}/delete-user/${id}`,
         });
-        Router.reload();
+        setusersData(response.data.users);
 
         Notifier(response.data.message, "success");
 
@@ -63,7 +63,7 @@ export default function Users({ users }) {
         title="Add User"
         modal={modal}
         toggle={toggle}
-        content={<AddUser toggle={toggle} />}
+        content={<AddUser toggle={toggle} setusersData={setusersData} />}
       />
       <Modal
         size="lg"
@@ -71,7 +71,12 @@ export default function Users({ users }) {
         modal={editmodal}
         toggle={editToggle}
         content={
-          <EditUser toggle={editToggle} editId={editId} editData={editData} />
+          <EditUser
+            toggle={editToggle}
+            editId={editId}
+            editData={editData}
+            setusersData={setusersData}
+          />
         }
       />
       <Layout>

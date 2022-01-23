@@ -6,20 +6,20 @@ import Button from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/router";
 
 export default function Create(props) {
-  const Router = useRouter();
+  const [password, setPassword] = React.useState("");
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
       lastname: "",
       email: "",
       phone: "",
-      // password: "",
-      // confirm_password: "",
+      password: "",
+      confirm_password: "",
     },
-    validationSchema: Detail_YUP,
+    validationSchema: password ? PasswordDetail_YUP : Detail_YUP,
     onSubmit: async (values) => {
       try {
         let response = await Axios({
@@ -27,7 +27,7 @@ export default function Create(props) {
           url: `${baseUrl}/edit-user/${props.editId}`,
           data: values,
         });
-        Router.reload();
+        props.setusersData(response.data.users);
 
         props.toggle();
 
@@ -41,19 +41,23 @@ export default function Create(props) {
       }
     },
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "phone") {
-      formik.setFieldValue(name, value.replace(/\D/g, ""));
-    } else {
+    if (name == "phone") {
+      if (value.length <= 11) {
+        formik.setFieldValue(name, value.replace(/\D/g, ""));
+      }
+    } else if (name === "password") {
+      setPassword(value);
       formik.setFieldValue(name, value);
     }
   };
   useEffect(() => {
     if (props.editData) {
-      Object.keys(props.editData).map((dt) =>
-        formik.setFieldValue(dt, props.editData[dt])
-      );
+      Object.keys(props.editData).map((dt) => {
+        if (dt !== "password") formik.setFieldValue(dt, props.editData[dt]);
+      });
     }
   }, []);
 
@@ -130,7 +134,7 @@ export default function Create(props) {
             </div>
           </div>
         </div>
-        {/* <div className="lg:flex no-wrap -mx-3 mb-0">
+        <div className="lg:flex no-wrap -mx-3 mb-0">
           <div className="w-full lg:w-1/2 md:w-full sm:w-full px-3">
             <TextInput
               className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -147,10 +151,10 @@ export default function Create(props) {
               ) : null}
             </div>
           </div>
-          <div className="w-full lg:w-1/2 md:w-full sm:w-full px-3 mb-6 md:mb-0">
+          <div className="w-full lg:w-1/2 md:w-full sm:w-full px-3">
             <TextInput
               className="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              type="confirm_password"
+              type="password"
               placeholder="Confirm Password"
               label="Confirm Password"
               name="confirm_password"
@@ -164,7 +168,7 @@ export default function Create(props) {
               ) : null}
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="row pb-2 mt-3 ">
           <div className="col-lg-12 text-right">
@@ -180,20 +184,29 @@ const Detail_YUP = Yup.object({
   firstname: Yup.string().required("Required"),
   lastname: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
-  phone: Yup.number()
+  phone: Yup.string()
     .min(11, "Phone number length should be 11")
     .required("Required"),
-  // password: Yup.string()
-  //   .min(6, "Must be 6 characters long")
-  //   .required("Required"),
-  // confirm_password: Yup.string()
-  //   .when("password", {
-  //     is: (val) => (val && val.length > 0 ? true : false),
-  //     then: Yup.string().oneOf(
-  //       [Yup.ref("password")],
-  //       "Both password need to be the same"
-  //     ),
-  //   })
-  //   .min(6, "Must be 6 characters long")
-  //   .required("Required"),
+});
+
+const PasswordDetail_YUP = Yup.object({
+  firstname: Yup.string().required("Required"),
+  lastname: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email address").required("Required"),
+  phone: Yup.string()
+    .min(11, "Phone number length should be 11")
+    .required("Required"),
+  password: Yup.string()
+    .min(6, "Must be 6 characters long")
+    .required("This field is required"),
+  confirm_password: Yup.string()
+    .when("password", {
+      is: (val) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    })
+    .min(6, "Must be 6 characters long")
+    .required("Required"),
 });
