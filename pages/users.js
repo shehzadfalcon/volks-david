@@ -17,7 +17,7 @@ useEffect(() => {
  if(users && users.length>0){
   setusersData(users)
  }
-}, [users,modal])
+}, [])
   return (
     <>
     <Modal
@@ -26,7 +26,7 @@ useEffect(() => {
         modal={modal}
         toggle={toggle}
         content={
-          <AddUser toggle={toggle}  />
+          <AddUser toggle={toggle}  setusersData={setusersData}/>
         }
       />
     <Layout>

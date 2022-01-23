@@ -6,6 +6,7 @@ import Link from "next/link";
 import Router from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import TextInput from '../components/TextInput'
 export default function Login() {
   const [loading, setloading] = React.useState(false);
   const formik = useFormik({
@@ -15,6 +16,7 @@ export default function Login() {
       phone: "",
       email: "",
       password: "",
+      confirm_password:""
     },
     validationSchema: REGISTER_YUP,
     onSubmit: async (values) => {
@@ -139,6 +141,24 @@ export default function Login() {
                       ) : null}
                     </div>
                   </div>
+                  <div className="flex flex-col ">
+                    <input
+                      id="confirm_password"
+                      type="text"
+                      className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                    
+                      name="confirm_password"
+                      placeholder="Confirm Password"
+                      onChange={formik.handleChange}
+                      value={formik.values.confirm_password}
+                    />
+                    <div className="text-danger pt-1">
+                      {formik.touched.confirm_password &&
+                      formik.errors.confirm_password ? (
+                        <div>{formik.errors.confirm_password}</div>
+                      ) : null}
+                    </div>
+                  </div>
                   <div className="flex flex-col items-end">
                     <div className="text-sm">
                       <a
@@ -179,7 +199,19 @@ export default function Login() {
 }
 const REGISTER_YUP = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
-  password: Yup.string().max(255).required("Required"),
+  password: Yup.string()
+  .min(6, "Must be 6 characters long")
+  .required("Required"),
+confirm_password: Yup.string()
+  .when("password", {
+    is: (val) => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("password")],
+      "Both password need to be the same"
+    ),
+  })
+  .min(6, "Must be 6 characters long")
+  .required("Required"),
   firstname: Yup.string().max(255).required("Required"),
   lastname: Yup.string().max(255).required("Required"),
   phone: Yup.number()

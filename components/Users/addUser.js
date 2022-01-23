@@ -28,6 +28,7 @@ export default function Create(props) {
           url: `${baseUrl}/signup`,
           data: values,
         })
+        props.setusersData(response.data.users)
         props.toggle()
 
         Notifier(response.data.message, "success")
