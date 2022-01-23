@@ -39,6 +39,7 @@ const EditProfile = () => {
 
     onSubmit: async (values) => {
       setloading(true);
+      setPassword("");
 
       try {
         let response = await Axios.put(
@@ -49,6 +50,8 @@ const EditProfile = () => {
 
         setloading(false);
         Notifier(response.data.message, "success");
+        formik.setFieldValue("password", "");
+        formik.setFieldValue("confirm_password", "");
       } catch (err) {
         setloading(false);
 
