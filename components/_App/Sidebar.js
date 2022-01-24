@@ -1,7 +1,10 @@
 import Link from "next/link";
 import React from "react";
+import { handleLogout, getUser } from "../../utils/auth";
 
 export default function Sidebar() {
+  let USER = getUser();
+
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <div className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -15,7 +18,7 @@ export default function Sidebar() {
         </Link>
       </div>
       <ul className="nav">
-        {/* <li className="nav-item profile">
+        <li className="nav-item profile">
           <div className="profile-desc">
             <div className="profile-pic">
               <div className="count-indicator">
@@ -27,8 +30,10 @@ export default function Sidebar() {
                 <span className="count bg-success" />
               </div>
               <div className="profile-name">
-                <h5 className="mb-0 font-weight-normal">Henry Klein</h5>
-                <span>Gold Member</span>
+                <h5 className="mb-0 font-weight-normal">
+                  {USER && `${USER.firstname} ${USER.lastname}`}
+                </h5>
+                <span>{USER && `${USER.role}`}</span>
               </div>
             </div>
             <a href="#" id="profile-dropdown" data-toggle="dropdown">
@@ -45,40 +50,32 @@ export default function Sidebar() {
                   </div>
                 </div>
                 <div className="preview-item-content">
-                  <p className="preview-subject ellipsis mb-1 text-small">
-                    Account settings
-                  </p>
+                  <Link href="/profile-settings">
+                    <p className="preview-subject ellipsis mb-1 text-small">
+                      Account settings
+                    </p>
+                  </Link>
                 </div>
               </a>
               <div className="dropdown-divider" />
               <a href="#" className="dropdown-item preview-item">
                 <div className="preview-thumbnail">
                   <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-onepassword  text-info" />
+                    <i className="mdi mdi-logout text-danger" />
                   </div>
                 </div>
                 <div className="preview-item-content">
-                  <p className="preview-subject ellipsis mb-1 text-small">
-                    Change Password
-                  </p>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-calendar-today text-success" />
-                  </div>
-                </div>
-                <div className="preview-item-content">
-                  <p className="preview-subject ellipsis mb-1 text-small">
-                    To-do list
+                  <p
+                    onClick={() => handleLogout()}
+                    className="preview-subject ellipsis mb-1 text-small"
+                  >
+                    Logout
                   </p>
                 </div>
               </a>
             </div>
           </div>
-        </li> */}
+        </li>
         <li className="nav-item nav-category">
           <span className="nav-link">Navigation</span>
         </li>
@@ -92,74 +89,79 @@ export default function Sidebar() {
             </a>
           </Link>
         </li>
-        <li className="nav-item menu-items">
-          <a
-            className="nav-link"
-            data-toggle="collapse"
-            href="#auth"
-            aria-expanded="false"
-            aria-controls="auth"
-          >
-            <span className="menu-icon">
-              <i className="mdi mdi-security" />
-            </span>
-            <span className="menu-title">Invoice</span>
-            <i className="menu-arrow" />
-          </a>
-          <div className="collapse" id="auth">
-            <ul className="nav flex-column sub-menu">
-              <li className="nav-item">
-                {" "}
-                <Link href="/customers">
-                  <a
-                    className="nav-link"
-                    href="../../pages/samples/blank-page.html"
-                  >
+        {USER && USER.role == "Admin" && (
+          <>
+            <li className="nav-item menu-items">
+              <a
+                className="nav-link"
+                data-toggle="collapse"
+                href="#auth"
+                aria-expanded="false"
+                aria-controls="auth"
+              >
+                <span className="menu-icon">
+                  <i className="mdi mdi-security" />
+                </span>
+                <span className="menu-title">Invoice</span>
+                <i className="menu-arrow" />
+              </a>
+              <div className="collapse" id="auth">
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
                     {" "}
-                    Customers
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                {" "}
-                <Link href="/generate-invoice">
-                  <a
-                    className="nav-link"
-                    href="../../pages/samples/error-404.html"
-                  >
+                    <Link href="/customers">
+                      <a
+                        className="nav-link"
+                        href="../../pages/samples/blank-page.html"
+                      >
+                        {" "}
+                        Customers
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
                     {" "}
-                    Generate Invoice
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item">
-                {" "}
-                <Link href="/invoice-list">
-                  <a
-                    className="nav-link"
-                    href="../../pages/samples/error-500.html"
-                  >
+                    <Link href="/generate-invoice">
+                      <a
+                        className="nav-link"
+                        href="../../pages/samples/error-404.html"
+                      >
+                        {" "}
+                        Generate Invoice
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
                     {" "}
-                    Invoice List
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="nav-item menu-items">
-          <Link href="/users">
-            <a
-              className="nav-link"
-              href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html"
-            >
-              <span className="menu-icon">
-                <i className="mdi mdi-file-document-box" />
-              </span>
-              <span className="menu-title">Users</span>
-            </a>
-          </Link>
-        </li>
+                    <Link href="/invoice-list">
+                      <a
+                        className="nav-link"
+                        href="../../pages/samples/error-500.html"
+                      >
+                        {" "}
+                        Invoice List
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li className="nav-item menu-items">
+              <Link href="/users">
+                <a
+                  className="nav-link"
+                  href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html"
+                >
+                  <span className="menu-icon">
+                    <i className="mdi mdi-file-document-box" />
+                  </span>
+                  <span className="menu-title">Users</span>
+                </a>
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

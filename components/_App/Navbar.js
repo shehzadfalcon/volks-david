@@ -255,7 +255,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="preview-item-content">
-                    <p className="preview-subject mb-1">Settings</p>
+                    <p className="preview-subject mb-1">Account Settings</p>
                   </div>
                 </a>
               </Link>
