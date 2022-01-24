@@ -10,7 +10,6 @@ export default function GenerateInvoice() {
               <div className="card">
                 <div className="card-body">
                   <h2 className="card-title text-2xl">From</h2>
-                  {/* <p className="card-description"> Basic form layout </p> */}
 
                   <div className="form-group">
                     <label htmlFor="exampleInputUsername1">Username</label>
