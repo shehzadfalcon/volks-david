@@ -1,11 +1,11 @@
-import * as React from "react"
-import Button from "@mui/material/Button"
+import * as React from "react";
+import Button from "@mui/material/Button";
 
 export default function IconLabelButtons(props) {
   return (
     <Button
       variant="outlined"
-      color="info"
+      color={"inherit"}
       onClick={props.onClick}
       size="large"
       className="text-capitalize"
@@ -13,5 +13,5 @@ export default function IconLabelButtons(props) {
     >
       {props.label}
     </Button>
-  )
+  );
 }
