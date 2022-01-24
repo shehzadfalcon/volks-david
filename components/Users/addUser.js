@@ -22,7 +22,7 @@ export default function Create(props) {
       try {
         let response = await Axios({
           method: "post",
-          url: `${baseUrl}/signup`,
+          url: `${baseUrl}/create-user`,
           data: values,
         });
         props.setusersData(response.data.users);
