@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../components/_App/Layout";
-import EditableTable from "../components/EditableTable";
 export default function GenerateInvoice() {
   return (
     <Layout>
@@ -139,14 +138,6 @@ export default function GenerateInvoice() {
                       />
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-12 grid-margin stretch-card">
-              <div className="card">
-                <div className="card-body">
-                  <h2 className="card-title text-2xl">From</h2>
-                  <EditableTable />
                 </div>
               </div>
             </div>
