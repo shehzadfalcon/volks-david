@@ -91,11 +91,7 @@ const Navbar = () => {
               <p className="p-3 mb-0 text-center">See all projects</p>
             </div>
           </li>
-          <li className="nav-item nav-settings d-none d-lg-block">
-            <a className="nav-link" href="#">
-              <i className="mdi mdi-view-grid" />
-            </a>
-          </li>
+
           <li className="nav-item dropdown border-left">
             <a
               className="nav-link count-indicator dropdown-toggle"
@@ -220,62 +216,6 @@ const Navbar = () => {
               </a>
               <div className="dropdown-divider" />
               <p className="p-3 mb-0 text-center">See all notifications</p>
-            </div>
-          </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link"
-              id="profileDropdown"
-              href="#"
-              data-toggle="dropdown"
-            >
-              <div className="navbar-profile">
-                <img
-                  className="img-xs rounded-circle"
-                  src="assets/images/faces/face15.jpg"
-                  alt=""
-                />
-                <p className="mb-0 d-none d-sm-block navbar-profile-name">
-                  {USER && `${USER.firstname} ${USER.lastname}`}
-                </p>
-                <i className="mdi mdi-menu-down d-none d-sm-block" />
-              </div>
-            </a>
-            <div
-              className="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="profileDropdown"
-            >
-              <h6 className="p-3 mb-0">Profile</h6>
-              <div className="dropdown-divider" />
-              <Link href="/profile-settings">
-                <a className="dropdown-item preview-item">
-                  <div className="preview-thumbnail">
-                    <div className="preview-icon bg-dark rounded-circle">
-                      <i className="mdi mdi-settings text-success" />
-                    </div>
-                  </div>
-                  <div className="preview-item-content">
-                    <p className="preview-subject mb-1">Account Settings</p>
-                  </div>
-                </a>
-              </Link>
-
-              <div className="dropdown-divider" />
-              <a className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-logout text-danger" />
-                  </div>
-                </div>
-                <div
-                  className="preview-item-content"
-                  onClick={() => handleLogout()}
-                >
-                  <p className="preview-subject mb-1">Log out</p>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              {/* <p className="p-3 mb-0 text-center">Advanced settings</p> */}
             </div>
           </li>
         </ul>

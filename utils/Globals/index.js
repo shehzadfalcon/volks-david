@@ -82,3 +82,45 @@ export const invoicesheadCells = [
     label: "Actions",
   },
 ];
+
+//
+export const generateInvoiceTable = [
+  {
+    id: "firstname",
+    numeric: false,
+    disablePadding: true,
+    label: "Description",
+  },
+  {
+    id: "lastname",
+    numeric: false,
+    disablePadding: true,
+    label: "Qty",
+  },
+
+  { id: "phone", numeric: true, disablePadding: false, label: "Unit Price" },
+  {
+    id: "email",
+    numeric: true,
+    disablePadding: false,
+    label: "Total Price",
+  },
+  {
+    id: "email",
+    numeric: true,
+    disablePadding: false,
+    label: "Discount",
+  },
+  {
+    id: "email",
+    numeric: true,
+    disablePadding: false,
+    label: "Net Price",
+  },
+  {
+    id: "actions",
+    numeric: true,
+    disablePadding: false,
+    label: "Actions",
+  },
+];

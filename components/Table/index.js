@@ -331,9 +331,7 @@ export default function EnhancedTable(props) {
                       selected={isItemSelected}
                     >
                       {props.rows &&
-                        props.rows.slice(0,4).map(({ id }) => (
-
-
+                        props.rows.slice(0, 4).map(({ id }) => (
                           <StyledTableCell
                             component="th"
                             id={labelId}
@@ -344,19 +342,17 @@ export default function EnhancedTable(props) {
                           >
                             {row[id]}
                           </StyledTableCell>
-
                         ))}
                       <StyledTableCell>
-                      <IconButton color="primary">
-                          <EditIcon  onClick={()=>props.onEdit(row._id)}/>
+                        <IconButton color="primary">
+                          <EditIcon onClick={() => props.onEdit(row._id)} />
                         </IconButton>
                         <IconButton color="error">
-                          <DeleteIcon onClick={()=>props.onDelete(row._id)}/>
+                          <DeleteIcon onClick={() => props.onDelete(row._id)} />
                         </IconButton>
-                        
                       </StyledTableCell>
                     </TableRow>
-                  )
+                  );
                 })}
             </TableBody>
           </Table>
