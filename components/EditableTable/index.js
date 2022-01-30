@@ -22,7 +22,7 @@ export default class Products extends React.Component {
     this.state.products = [
       {
         id: 1,
-        description: "food",
+        description: "",
         qty: 1,
         unit_price: 5,
         total_price: 0,
@@ -30,6 +30,22 @@ export default class Products extends React.Component {
         net_price: 0,
       },
     ];
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.products !== this.state.products) {
+      let subTotal =
+        this.state.products.length > 0 &&
+        this.state.products
+          .map((item) => item.net_price)
+          .reduce((prev, curr) => prev + curr, 0);
+
+      var amountAfterDeductTax = subTotal - this.state.tax;
+      let pendingAmountAfterDeductTax = amountAfterDeductTax;
+      this.setState({
+        pendingAmountAfterDeductTax: pendingAmountAfterDeductTax,
+        amountAfterDeductTax: amountAfterDeductTax,
+      });
+    }
   }
   handleUserInput(filterText) {
     this.setState({ filterText: filterText });
@@ -325,7 +341,7 @@ class ProductRow extends React.Component {
             type: "number",
             name: "qty",
             placeholder: "qty",
-
+            min: 0,
             value: this.props.product.qty,
             id: this.props.product.id,
           }}
@@ -336,7 +352,7 @@ class ProductRow extends React.Component {
             type: "number",
             name: "unit_price",
             placeholder: "Unit Price",
-
+            min: 0,
             value: this.props.product.unit_price,
             id: this.props.product.id,
           }}
@@ -349,7 +365,7 @@ class ProductRow extends React.Component {
             name: "total_price",
             placeholder: "Total Price",
             disabled: true,
-
+            min: 0,
             value: this.props.product.total_price,
             id: this.props.product.id,
           }}
@@ -360,7 +376,7 @@ class ProductRow extends React.Component {
             type: "number",
             name: "discount",
             placeholder: "Discount",
-
+            min: 0,
             value: this.props.product.discount,
             id: this.props.product.id,
           }}
@@ -372,7 +388,7 @@ class ProductRow extends React.Component {
             name: "net_price",
             placeholder: "Net Price",
             disabled: true,
-
+            min: 0,
             value: this.props.product.net_price,
             id: this.props.product.id,
           }}
@@ -403,6 +419,7 @@ class EditableCell extends React.Component {
           value={this.props.cellData.value}
           placeholder={this.props.cellData.placeholder}
           onChange={this.props.onProductTableUpdate}
+          min={this.props.cellData.min}
         />
       </td>
     );

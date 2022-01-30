@@ -20,6 +20,12 @@ export const usersheadCells = [
     label: "Email",
   },
   {
+    id: "approve",
+    numeric: true,
+    disablePadding: false,
+    label: "Approve",
+  },
+  {
     id: "actions",
     numeric: true,
     disablePadding: false,

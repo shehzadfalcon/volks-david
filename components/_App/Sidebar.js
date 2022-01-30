@@ -43,20 +43,20 @@ export default function Sidebar() {
               className="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
               aria-labelledby="profile-dropdown"
             >
-              <a href="#" className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-settings text-primary" />
+              <Link href="/profile-settings">
+                <a href="#" className="dropdown-item preview-item">
+                  <div className="preview-thumbnail">
+                    <div className="preview-icon bg-dark rounded-circle">
+                      <i className="mdi mdi-settings text-primary" />
+                    </div>
                   </div>
-                </div>
-                <div className="preview-item-content">
-                  <Link href="/profile-settings">
+                  <div className="preview-item-content">
                     <p className="preview-subject ellipsis mb-1 text-small">
                       Account settings
                     </p>
-                  </Link>
-                </div>
-              </a>
+                  </div>
+                </a>
+              </Link>
               <div className="dropdown-divider" />
               <a
                 href="#"

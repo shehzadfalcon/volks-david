@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/_App/Layout";
 import EditableTable from "../components/EditableTable";
 import { useFormik } from "formik";
 import Axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import * as Yup from "yup";
+import SelectField from "../components/SelectInput";
 export default function GenerateInvoice() {
   const formik = useFormik({
     initialValues: {
@@ -30,6 +31,34 @@ export default function GenerateInvoice() {
       // setsubmitting(true);
     },
   });
+  const [customers, setCustomers] = useState("");
+  const getAllCustomers = async () => {
+    try {
+      const res = await Axios.get(`${baseUrl}/customers`);
+      res.data.customers;
+      setCustomers(res.data.customers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getAllCustomers();
+  }, []);
+  const [customer, setCustomer] = useState("");
+
+  const handleCustomer = (e) => {
+    let value = e.target.value;
+    if (customers && customers.length > 0) {
+      let customer = customers.find((c) => c._id == value);
+      if (customer) {
+        formik.setFieldValue("to_name", customer.name);
+        formik.setFieldValue("to_email", customer.email);
+        formik.setFieldValue("to_phone", customer.phone);
+        formik.setFieldValue("to_address", customer.address);
+      }
+    }
+    setCustomer(e.target.value);
+  };
   const hiddenFileInput = React.useRef(null);
   const [showImage, setShowImage] = useState(
     "https://getstamped.co.uk/wp-content/uploads/WebsiteAssets/Placeholder.jpg"
@@ -307,8 +336,17 @@ export default function GenerateInvoice() {
             <div className="col-md-6 grid-margin stretch-card">
               <div className="card">
                 <div className="card-body">
-                  <h2 className="card-title text-2xl">To</h2>
-
+                  <div className="flex justify-content-between">
+                    <h2 className="card-title text-2xl">To</h2>
+                    <div className="form-group">
+                      <SelectField
+                        onChange={handleCustomer}
+                        value={customer}
+                        options={customers}
+                        label="Select Customer"
+                      />
+                    </div>
+                  </div>
                   <div className="form-group">
                     <label htmlFor="exampleInputUsername1">Name</label>
                     <input

@@ -20,7 +20,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
+import Button from "../Button";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
@@ -331,7 +331,7 @@ export default function EnhancedTable(props) {
                       selected={isItemSelected}
                     >
                       {props.rows &&
-                        props.rows.slice(0, 4).map(({ id }) => (
+                        props.rows.slice(0, 5).map(({ id }) => (
                           <StyledTableCell
                             component="th"
                             id={labelId}
@@ -340,16 +340,28 @@ export default function EnhancedTable(props) {
                             align="center"
                             padding="none"
                           >
-                            {row[id]}
+                            {id == "approve"
+                              ? row[id] == false
+                                ? "Not Approve"
+                                : "Approved"
+                              : row[id]}
                           </StyledTableCell>
                         ))}
-                      <StyledTableCell>
+                      <StyledTableCell
+                        scope="row"
+                        align="center"
+                        padding="none"
+                      >
                         <IconButton color="primary">
                           <EditIcon onClick={() => props.onEdit(row._id)} />
                         </IconButton>
                         <IconButton color="error">
                           <DeleteIcon onClick={() => props.onDelete(row._id)} />
                         </IconButton>
+                        <Button
+                          label="Approve"
+                          onClick={() => props.onApprove(row._id)}
+                        />
                       </StyledTableCell>
                     </TableRow>
                   );

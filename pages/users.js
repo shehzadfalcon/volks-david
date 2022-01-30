@@ -48,6 +48,25 @@ export default function Users({ users }) {
       }
     }
   };
+  const onApprove = async (id) => {
+    if (id) {
+      try {
+        let response = await Axios({
+          method: "get",
+          url: `${baseUrl}/approve-user/${id}`,
+        });
+        setusersData(response.data.users);
+
+        Notifier(response.data.message, "success");
+
+        // router.push("/profile");
+      } catch (err) {
+        if (err.response) {
+          Notifier(err.response.data.message, "error");
+        }
+      }
+    }
+  };
   const handleEdit = (id) => {
     if (id) {
       seteditId(id);
@@ -100,6 +119,7 @@ export default function Users({ users }) {
                         rows={usersheadCells}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
+                        onApprove={onApprove}
                       />
                     ) : (
                       "no data found"
