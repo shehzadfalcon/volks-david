@@ -154,7 +154,7 @@ const EditProfile = () => {
                     <div className="flex flex-col ">
                       <input
                         id="password"
-                        type="text"
+                        type="password"
                         className="appearance-none block w-full  text-gray-700 rounded-3xl border-2 border-grey-400 py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white"
                         name="password"
                         placeholder="Password"
@@ -170,7 +170,7 @@ const EditProfile = () => {
                     <div className="flex flex-col ">
                       <input
                         id="confirm_password"
-                        type="text"
+                        type="password"
                         className="appearance-none block w-full  text-gray-700 rounded-3xl border-2 border-grey-400 py-2 px-4 mb-2 leading-tight focus:outline-none focus:bg-white"
                         name="confirm_password"
                         placeholder="Confirm Password"

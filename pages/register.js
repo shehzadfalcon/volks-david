@@ -144,7 +144,7 @@ export default function Login() {
                   <div className="flex flex-col mb-2">
                     <input
                       id="confirm_password"
-                      type="text"
+                      type="password"
                       className="appearance-none block w-full  text-gray-700 rounded-2xl border-2 border-grey-400 py-1 px-4 leading-tight focus:outline-none focus:bg-white"
                       name="confirm_password"
                       placeholder="Confirm Password"

@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "../../utils/ActiveLink";
 import { handleLogout, getUser } from "../../utils/auth";
+import Axios from "axios";
+import Notifier from "../../utils/Notifier";
+import baseUrl from "../../utils/baseUrl";
 const Navbar = () => {
-  let USER = getUser();
+  const [notifications, setNotifications] = useState([]);
+  useEffect(async () => {
+    try {
+      let response = await Axios({
+        method: "get",
+        url: `${baseUrl}/notifications`,
+      });
 
+      setNotifications(response.data.notifications);
+    } catch (err) {
+      if (err.response) {
+        Notifier(err.response.data.message, "error");
+      }
+    }
+  }, []);
   return (
     <nav className="navbar p-0 fixed-top d-flex flex-row">
       <div className="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -176,46 +192,30 @@ const Navbar = () => {
             >
               <h6 className="p-3 mb-0">Notifications</h6>
               <div className="dropdown-divider" />
-              <a className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-calendar text-success" />
-                  </div>
-                </div>
-                <div className="preview-item-content">
-                  <p className="preview-subject mb-1">Event today</p>
-                  <p className="text-muted ellipsis mb-0">
-                    {" "}
-                    Just a reminder that you have an event today{" "}
-                  </p>
-                </div>
-              </a>
+              {notifications &&
+                notifications.map((notify) => (
+                  <>
+                    <a className="dropdown-item preview-item">
+                      {/* <div className="preview-thumbnail">
+                      <div className="preview-icon bg-dark rounded-circle">
+                        <i className="mdi mdi-calendar text-success" />
+                      </div>
+                    </div> */}
+                      <div className="preview-item-content">
+                        <p className="preview-subject mb-1">{notify.title}</p>
+                        <p className="text-muted ellipsis mb-0">
+                          {notify.description}
+                        </p>
+                      </div>
+                    </a>
+                    <div className="dropdown-divider" />
+                  </>
+                ))}
+
               <div className="dropdown-divider" />
-              <a className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-settings text-danger" />
-                  </div>
-                </div>
-                <div className="preview-item-content">
-                  <p className="preview-subject mb-1">Settings</p>
-                  <p className="text-muted ellipsis mb-0"> Update dashboard </p>
-                </div>
-              </a>
+
               <div className="dropdown-divider" />
-              <a className="dropdown-item preview-item">
-                <div className="preview-thumbnail">
-                  <div className="preview-icon bg-dark rounded-circle">
-                    <i className="mdi mdi-link-variant text-warning" />
-                  </div>
-                </div>
-                <div className="preview-item-content">
-                  <p className="preview-subject mb-1">Launch Admin</p>
-                  <p className="text-muted ellipsis mb-0"> New admin wow! </p>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              <p className="p-3 mb-0 text-center">See all notifications</p>
+              {/* <p className="p-3 mb-0 text-center">See all notifications</p> */}
             </div>
           </li>
         </ul>

@@ -58,17 +58,18 @@ export default function Sidebar() {
                 </div>
               </a>
               <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item preview-item">
+              <a
+                href="#"
+                className="dropdown-item preview-item"
+                onClick={() => handleLogout()}
+              >
                 <div className="preview-thumbnail">
                   <div className="preview-icon bg-dark rounded-circle">
                     <i className="mdi mdi-logout text-danger" />
                   </div>
                 </div>
                 <div className="preview-item-content">
-                  <p
-                    onClick={() => handleLogout()}
-                    className="preview-subject ellipsis mb-1 text-small"
-                  >
+                  <p className="preview-subject ellipsis mb-1 text-small">
                     Logout
                   </p>
                 </div>
