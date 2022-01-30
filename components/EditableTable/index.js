@@ -163,17 +163,17 @@ export default class Products extends React.Component {
           products={this.state.products}
           filterText={this.state.filterText}
         />
-        <div class="row">
-          <div class="col-lg-4 col-sm-5"></div>
+        <div className="row">
+          <div className="col-lg-4 col-sm-5"></div>
 
-          <div class="col-lg-4 col-sm-5 ml-auto">
-            <table class="table table-clear">
+          <div className="col-lg-4 col-sm-5 ml-auto">
+            <table className="table table-clear">
               <tbody>
                 <tr>
-                  <td class="left">
+                  <td className="left">
                     <strong>Subtotal</strong>
                   </td>
-                  <td class="right">
+                  <td className="right">
                     {this.state.products.length > 0 &&
                       this.state.products
                         .map((item) => item.net_price)
@@ -183,10 +183,10 @@ export default class Products extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td class="left">
+                  <td className="left">
                     <strong>Tax </strong>
                   </td>
-                  <td class="right">
+                  <td className="right">
                     <TextInput
                       type="number"
                       name="tax"
@@ -197,19 +197,19 @@ export default class Products extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td class="left">
+                  <td className="left">
                     <strong>Total</strong>
                   </td>
-                  <td class="right">
+                  <td className="right">
                     {this.state.amountAfterDeductTax.toLocaleString("en-US")}{" "}
                     PKR
                   </td>
                 </tr>
                 <tr>
-                  <td class="left">
+                  <td className="left">
                     <strong>Balance Due</strong>
                   </td>
-                  <td class="right">
+                  <td className="right">
                     <strong>
                       {this.state.pendingAmountAfterDeductTax.toLocaleString(
                         "en-US"
@@ -236,24 +236,24 @@ export default class Products extends React.Component {
     );
   }
 }
-class SearchBar extends React.Component {
-  handleChange() {
-    this.props.onUserInput(this.refs.filterTextInput.value);
-  }
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.props.filterText}
-          ref="filterTextInput"
-          onChange={this.handleChange.bind(this)}
-        />
-      </div>
-    );
-  }
-}
+// class SearchBar extends React.Component {
+//   handleChange() {
+//     this.props.onUserInput(this.refs.filterTextInput.value);
+//   }
+//   render() {
+//     return (
+//       <div>
+//         <input
+//           type="text"
+//           placeholder="Search..."
+//           value={this.props.filterText}
+//           ref="filterTextInput"
+//           onChange={this.handleChange.bind(this)}
+//         />
+//       </div>
+//     );
+//   }
+// }
 
 class ProductTable extends React.Component {
   render() {
