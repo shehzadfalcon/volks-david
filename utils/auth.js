@@ -3,7 +3,18 @@ import Router from "next/router";
 
 export const handleLogin = (token, user) => {
   cookie.set("token", token);
-  cookie.set("user", JSON.stringify(user));
+  cookie.set(
+    "user",
+    JSON.stringify({
+      _id: user._id,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      phone: user.phone,
+      password: user.password,
+      role: user.role,
+    })
+  );
   Router.push("/dashboard");
 };
 

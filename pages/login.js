@@ -22,6 +22,7 @@ export default function Login() {
         let response = await Axios.post(`${baseUrl}/login`, values);
 
         const { token, user } = response.data.result;
+
         handleLogin(token, user);
         Notifier(response.data.message, "success");
 
