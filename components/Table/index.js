@@ -331,22 +331,39 @@ export default function EnhancedTable(props) {
                       selected={isItemSelected}
                     >
                       {props.rows &&
-                        props.rows.slice(0, 5).map(({ id }) => (
-                          <StyledTableCell
-                            component="th"
-                            id={labelId}
-                            key={id}
-                            scope="row"
-                            align="center"
-                            padding="none"
-                          >
-                            {id == "approve"
-                              ? row[id] == false
-                                ? "Not Approve"
-                                : "Approved"
-                              : row[id]}
-                          </StyledTableCell>
-                        ))}
+                      props.rows.some((row) => row.id == "approve") == true
+                        ? props.rows.slice(0, 5).map(({ id }) => (
+                            <StyledTableCell
+                              component="th"
+                              id={labelId}
+                              key={id}
+                              scope="row"
+                              align="center"
+                              padding="none"
+                            >
+                              {id == "approve"
+                                ? row[id] == false
+                                  ? "Not Approve"
+                                  : "Approved"
+                                : row[id]}
+                            </StyledTableCell>
+                          ))
+                        : props.rows.slice(0, 4).map(({ id }) => (
+                            <StyledTableCell
+                              component="th"
+                              id={labelId}
+                              key={id}
+                              scope="row"
+                              align="center"
+                              padding="none"
+                            >
+                              {id == "approve"
+                                ? row[id] == false
+                                  ? "Not Approve"
+                                  : "Approved"
+                                : row[id]}
+                            </StyledTableCell>
+                          ))}
                       <StyledTableCell
                         scope="row"
                         align="center"
@@ -358,10 +375,14 @@ export default function EnhancedTable(props) {
                         <IconButton color="error">
                           <DeleteIcon onClick={() => props.onDelete(row._id)} />
                         </IconButton>
-                        <Button
-                          label="Approve"
-                          onClick={() => props.onApprove(row._id)}
-                        />
+                        {props.rows &&
+                          props.rows.some((row) => row.id == "approve") ==
+                            true && (
+                            <Button
+                              label="Approve"
+                              onClick={() => props.onApprove(row._id)}
+                            />
+                          )}
                       </StyledTableCell>
                     </TableRow>
                   );
