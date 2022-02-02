@@ -16,7 +16,11 @@ export default function Users({ users }) {
                 <p className="card-description"></p>
                 <div className="table-responsive">
                   {users && users.length > 0 ? (
-                    <Table data={users} rows={invoicesheadCells} />
+                    <Table
+                      data={users}
+                      rows={invoicesheadCells}
+                      invoice={true}
+                    />
                   ) : (
                     "no data found"
                   )}

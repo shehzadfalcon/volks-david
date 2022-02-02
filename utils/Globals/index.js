@@ -81,12 +81,6 @@ export const invoicesheadCells = [
     disablePadding: true,
     label: "Address",
   },
-  {
-    id: "actions",
-    numeric: true,
-    disablePadding: false,
-    label: "Actions",
-  },
 ];
 
 //

@@ -364,26 +364,32 @@ export default function EnhancedTable(props) {
                                 : row[id]}
                             </StyledTableCell>
                           ))}
-                      <StyledTableCell
-                        scope="row"
-                        align="center"
-                        padding="none"
-                      >
-                        <IconButton color="primary">
-                          <EditIcon onClick={() => props.onEdit(row._id)} />
-                        </IconButton>
-                        <IconButton color="error">
-                          <DeleteIcon onClick={() => props.onDelete(row._id)} />
-                        </IconButton>
-                        {props.rows &&
-                          props.rows.some((row) => row.id == "approve") ==
-                            true && (
-                            <Button
-                              label="Approve"
-                              onClick={() => props.onApprove(row._id)}
+                      {props.invoice && props.invoice == true ? (
+                        ""
+                      ) : (
+                        <StyledTableCell
+                          scope="row"
+                          align="center"
+                          padding="none"
+                        >
+                          <IconButton color="primary">
+                            <EditIcon onClick={() => props.onEdit(row._id)} />
+                          </IconButton>
+                          <IconButton color="error">
+                            <DeleteIcon
+                              onClick={() => props.onDelete(row._id)}
                             />
-                          )}
-                      </StyledTableCell>
+                          </IconButton>
+                          {props.rows &&
+                            props.rows.some((row) => row.id == "approve") ==
+                              true && (
+                              <Button
+                                label="Approve"
+                                onClick={() => props.onApprove(row._id)}
+                              />
+                            )}
+                        </StyledTableCell>
+                      )}
                     </TableRow>
                   );
                 })}
